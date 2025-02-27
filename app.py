@@ -23,8 +23,9 @@ def speak_text(text):
         os.system("mpg321 output.mp3" if os.name != "nt" else "start output.mp3")  # Linux/Mac: mpg321, Windows: start
 
 # Video capture function
+
 def generate_frames():
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture("http://your_local_ip:5000/video_feed")  # Use external webcam stream
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
     
