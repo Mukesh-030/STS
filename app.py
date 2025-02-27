@@ -1,8 +1,8 @@
 from flask import Flask, render_template, Response
 import cv2
 import mediapipe as mp
-import pyttsx3
-import threading
+from gtts import gTTS
+import os
 import time
 
 app = Flask(__name__)
@@ -12,18 +12,15 @@ mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(min_detection_confidence=0.7, min_tracking_confidence=0.7)
 mp_draw = mp.solutions.drawing_utils
 
-# Text-to-Speech Engine
-engine = pyttsx3.init()
-engine.setProperty('rate', 175)  # Speed up voice output
-
 last_spoken_time = 0
 
 def speak_text(text):
     global last_spoken_time
     if time.time() - last_spoken_time >= 2:  # Set interval of 2 seconds
         last_spoken_time = time.time()
-        thread = threading.Thread(target=lambda: (engine.say(text), engine.runAndWait()))
-        thread.start()
+        tts = gTTS(text=text, lang='en')
+        tts.save("output.mp3")
+        os.system("mpg321 output.mp3" if os.name != "nt" else "start output.mp3")  # Linux/Mac: mpg321, Windows: start
 
 # Video capture function
 def generate_frames():
