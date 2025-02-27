@@ -25,7 +25,7 @@ def speak_text(text):
 # Video capture function
 
 def generate_frames():
-    cap = cv2.VideoCapture("http://your_local_ip:5000/video_feed")  # Use external webcam stream
+    cap = cv2.VideoCapture("http://192.168.1.100:5000/video_feed")
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
     
