@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign to Speech</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: radial-gradient(circle, #1a1a2e, #16213e);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+        .video-container {
+            border: 5px solid #00f5d4;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0px 0px 15px #00f5d4;
+            display: none;
+            width: 80%;
+            max-width: 640px;
+            margin: auto;
+        }
+        .gesture-text {
+            font-size: 2rem;
+            font-weight: bold;
+            background: #00f5d4;
+            color: #16213e;
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+        .toggle-btn {
+            background: #00f5d4;
+            color: #16213e;
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            border: none;
+        }
+        .toggle-btn:hover {
+            background: #00c9a7;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-4xl font-bold mt-6">Sign to Speech Conversion</h1>
+    <p class="text-lg mt-2">Use your hand gestures to communicate!</p>
+    
+    <button id="toggle-btn" class="toggle-btn" onclick="toggleTracking()">Start Tracking</button>
+
+    <div class="flex justify-center mt-6">
+        <div class="video-container" id="video-container">
+            <img id="video-feed" src="" class="w-full h-auto">
+        </div>
+    </div>
+
+    <p id="gesture-text" class="gesture-text mt-4">Detecting...</p>
+
+    <script>
+        let tracking = false;
+
+        function toggleTracking() {
+            const videoContainer = document.getElementById("video-container");
+            const gestureText = document.getElementById("gesture-text");
+            const videoFeed = document.getElementById("video-feed");
+            const toggleBtn = document.getElementById("toggle-btn");
+
+            if (!tracking) {
+                videoFeed.src = "/video_feed";
+                videoContainer.style.display = "block";
+                gestureText.style.display = "block";
+                toggleBtn.textContent = "Stop Tracking";
+            } else {
+                videoFeed.src = "";
+                videoContainer.style.display = "none";
+                gestureText.style.display = "none";
+                toggleBtn.textContent = "Start Tracking";
+            }
+            tracking = !tracking;
+        }
+
+        // Auto-update gesture text dynamically
+        function updateGestureText(gesture) {
+            document.getElementById("gesture-text").textContent = gesture;
+        }
+    </script>
+</body>
+</html>
